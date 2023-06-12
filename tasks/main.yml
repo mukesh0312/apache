@@ -1,0 +1,31 @@
+---
+# tasks file for webserver
+- name: installed httpd package
+  yum:
+          name: httpd
+          state: installed
+
+- name: copy files
+  copy:
+          src: /home/ansible/roles/webserver/files/
+          dest: /var/www/html/
+          
+- name: create templet 
+  template:
+         src: /home/ansible/roles/webserver/templates/http.j2
+         dest: /etc/httpd/conf.d/http.conf
+
+- name: service added in firewalld 
+  ansible.posix.firewalld:
+          service: http     
+          permanent: true
+          immediate: true
+          state: enabled
+
+- name: restart          
+  service:
+          name: httpd
+          state: restarted
+          enabled: true  
+     
+

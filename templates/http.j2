@@ -1,0 +1,8 @@
+<virtualhost {{ ansible_default_ipv4.address }}:80>
+servername {{ ansible_fqdn }}
+documentroot /var/www/html
+</virtualhost>
+
+<directory /var/www/html>
+require all granted
+</directory>
